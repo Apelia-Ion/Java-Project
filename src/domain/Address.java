@@ -3,14 +3,12 @@ package domain;
 public class Address {
     private String street;
     private String city;
-    private String state;
-    private String postalCode;
+    private String zipCode;
 
-    public Address(String street, String city, String state, String postalCode) {
+    public Address(String street, String city, String zipCode) {
         this.street = street;
         this.city = city;
-        this.state = state;
-        this.postalCode = postalCode;
+        this.zipCode = zipCode;
     }
 
     public String getStreet() {
@@ -29,21 +27,16 @@ public class Address {
         this.city = city;
     }
 
-    public String getState() {
-        return state;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
-    public String getPostalCode() {
-        return postalCode;
+    @Override
+    public String toString() {
+        return street + ", " + city + ", " + zipCode;
     }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
-
 }

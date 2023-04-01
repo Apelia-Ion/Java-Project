@@ -48,4 +48,18 @@ public class CatalogService {
     public List<Book> getAllBooks() {
         return this.catalog.getAllBooks();
     }
+
+    public Book getBookById(int id) throws BookNotFoundException {
+        for (Book book : this.catalog.getAllBooks()) {
+            if (book.getId() == id) {
+                return book;
+            }
+        }
+        throw new BookNotFoundException("Book with ID " + id + " not found in catalog");
+    }
+
+    public Catalog getCatalog() {
+        return this.catalog;
+    }
+
 }

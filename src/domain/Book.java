@@ -1,18 +1,28 @@
 package domain;
 
 public class Book {
+    private int id;
     private String title;
     private Author author;
     private String isbn;
     private String publicationDate;
     private Genre genre;
 
-    public Book(String title, Author author, String isbn, String publicationDate, Genre genre) {
+    public Book(int id, String title, Author author, String isbn, String publicationDate, Genre genre) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.isbn = isbn;
         this.publicationDate = publicationDate;
         this.genre = genre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
