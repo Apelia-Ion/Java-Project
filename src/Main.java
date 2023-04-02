@@ -68,8 +68,8 @@ public class Main {
             System.out.println("3. Search book by ID");
             System.out.println("4. Search book by title");
             System.out.println("5. Display all books");
-            System.out.println("6. Search Record");
-            System.out.println("7. Search CD");
+            System.out.println("6. Search CD");
+            System.out.println("7. Search Record ");
             System.out.println("8. Issue Loan");
             System.out.println("9. Add Borrower");
             System.out.println("10. Return Loan");
