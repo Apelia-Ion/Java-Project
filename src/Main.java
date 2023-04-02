@@ -213,11 +213,30 @@ public class Main {
                     Address bAddress = new Address(bStreet, brCity, bZip);
 
                     borrowerService.addBorrower(bName,bAddress,bContact);
+                    break;
+                case 10:
+                    System.out.println("Enter Borrower Name: ");
+                     borrower = null;
+                     bName = scanner.next();
+                    try {
+                        borrower = borrowerService.findBorrower(bName);
+                    } catch (BorrowerNotFoundException e) {
+                        System.out.println(e);
+                        break;
+                    }
+                    List<Loan> loans = borrower.getLoans();
+                    for(Loan loan : loans)
+                    {
+                        if(!loan.isOverdue())
+                        {
+                            book = loan.getBook();
+                            book.setAvailable(true);
+                        }
+                    }
 
             }
 
         }
-
 
 
     }
