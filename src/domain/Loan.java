@@ -1,16 +1,21 @@
 package domain;
 
+import java.security.KeyStore;
 import java.time.LocalDate;
+
+
 
 public class Loan {
     private Borrower borrower;
     private Book book;
     private LocalDate dueDate;
+    private Boolean returned;
 
-    public Loan(Borrower borrower, Book book, LocalDate dueDate) {
+    public Loan(Borrower borrower, Book book, LocalDate dueDate, Boolean returned) {
         this.borrower = borrower;
         this.book = book;
         this.dueDate = dueDate;
+        this.returned=true;
     }
 
     public boolean isOverdue() {

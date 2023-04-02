@@ -1,65 +1,110 @@
+
 package service;
 
-import domain.*;
+import domain.Book;
+import domain.CD;
+import domain.Record;
 import exceptions.BookNotFoundException;
+import exceptions.RecordNotFoundException;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CatalogService {
-    private Catalog catalog;
+    private BookService bookService;
+    private MusicService musicService;
 
-    public CatalogService() {
-        this.catalog = new Catalog();
+    public CatalogService(BookService bookService, MusicService musicService) {
+        this.bookService = bookService;
+        this.musicService = musicService;
     }
 
+    // Book methods
+
+    // add a book to the catalog
     public void addBook(Book book) {
-        if (this.catalog.getAllBooks().contains(book)) {
-            throw new IllegalArgumentException("Book already exists in catalog");
-        }
-        this.catalog.getAllBooks().add(book);
+        bookService.addBook(book);
     }
 
+    // remove book from catalog
     public void removeBook(Book book) {
-        if (!this.catalog.getAllBooks().remove(book)) {
-            throw new BookNotFoundException("Book not found in catalog");
-        }
+        bookService.removeBook(book);
     }
 
+    // searches book in catalog
     public List<Book> searchBooks(String query) {
-        List<Book> results = new ArrayList<>();
-        for (Book book : this.catalog.getAllBooks()) {
-            if (book.getTitle().toLowerCase().contains(query.toLowerCase()) ||
-                    book.getAuthor().toString().toLowerCase().contains(query.toLowerCase())) {
-                results.add(book);
-            }
-        }
-        return results;
+        return bookService.searchBooks(query);
     }
 
-    public Book getBookByIsbn(String isbn) {
-        for (Book book : this.catalog.getAllBooks()) {
-            if (book.getIsbn().equals(isbn)) {
-                return book;
-            }
-        }
-        throw new BookNotFoundException("Book not found in catalog");
-    }
+    // return a book by isbn
+//    public Book getBookByIsbn(String isbn) throws BookNotFoundException {
+//        return bookService.getBookByIsbn(isbn);
+//    }
 
+    // returns all books from the catalog
     public List<Book> getAllBooks() {
-        return this.catalog.getAllBooks();
+        return bookService.getAllBooks();
     }
 
+    // returns book by id
     public Book getBookById(int id) throws BookNotFoundException {
-        for (Book book : this.catalog.getAllBooks()) {
-            if (book.getId() == id) {
-                return book;
-            }
-        }
-        throw new BookNotFoundException("Book with ID " + id + " not found in catalog");
+        return bookService.getBookById(id);
     }
 
-    public Catalog getCatalog() {
-        return this.catalog;
+    // Record methods
+
+    // add a record to the catalog
+    public void addRecord(Record record) {
+        musicService.addRecord(record);
     }
 
+    // remove a record from the catalog
+    public void removeRecord(Record record) throws RecordNotFoundException {
+        musicService.removeRecord(record.getId());
+    }
+
+    // searches record in catalog
+    public List<Record> searchRecords(String query) {
+        return musicService.searchRecords(query);
+    }
+
+    // returns all records from the catalog
+    public List<Record> getAllRecords() {
+        return musicService.getAllRecords();
+    }
+
+    // returns record by id
+    public Record getRecordById(int id) throws RecordNotFoundException {
+        return musicService.getRecordById(id);
+    }
+
+    // CD methods
+
+    // add a CD to the catalog
+    public void addCD(CD cd) {
+        musicService.addCD(cd);
+    }
+
+    // remove a CD from the catalog
+    public void removeCD(CD cd) throws RecordNotFoundException {
+        musicService.removeCD(cd.getId());
+    }
+
+    // searches CD in catalog
+    public List<CD> searchCDs(String query) {
+        return musicService.searchCDs(query);
+    }
+
+    // returns all CDs from the catalog
+    public List<CD> getAllCDs() {
+        return musicService.getAllCDs();
+    }
+
+    // returns CD by id
+    public CD getCDById(int id) throws RecordNotFoundException {
+        return musicService.getCDById(id);
+    }
 }
+

@@ -1,38 +1,62 @@
+
 package service;
 
 import domain.Book;
 import exceptions.BookNotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookService {
-    private CatalogService catalogService;
+    private List<Book> books;
 
-    public BookService(CatalogService catalogService) {
-        this.catalogService = catalogService;
+    public BookService() {
+        this.books = new ArrayList<>();
     }
 
     public List<Book> getAllBooks() {
-        return catalogService.getAllBooks();
+        return new ArrayList<>(books);
     }
 
     public Book getBookById(int id) throws BookNotFoundException {
-        Book book = catalogService.getBookById(id);
-        if (book == null) {
-            throw new BookNotFoundException("Book with ID " + id + " not found.");
+        for (Book book : books) {
+            if (book.getId() == id) {
+                return book;
+            }
         }
-        return book;
+        throw new BookNotFoundException("Book with ID " + id + " not found.");
     }
 
     public void addBook(Book book) {
-        catalogService.addBook(book);
+        books.add(book);
     }
 
     public void removeBook(Book book) {
-        catalogService.removeBook(book);
+        books.remove(book);
     }
 
+    //searches books by title or author
     public List<Book> searchBooks(String query) {
-        return catalogService.searchBooks(query);
+        List<Book> results = new ArrayList<>();
+        for (Book book : books) {
+            if (book.getTitle().toLowerCase().contains(query.toLowerCase()) ||
+                    book.getAuthor().toString().toLowerCase().contains(query.toLowerCase())) {
+                results.add(book);
+            }
+        }
+        return results;
     }
+
+    public void printBook(int id) {
+        Book book = null;
+        try {
+            book = getBookById(id);
+        } catch (BookNotFoundException e) {
+            e.printStackTrace();
+        }
+        System.out.println(book.toString());
+    }
+
 }
+
+

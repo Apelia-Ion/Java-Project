@@ -7,6 +7,7 @@ public class Book {
     private String isbn;
     private String publicationDate;
     private Genre genre;
+    private Boolean available;
 
     public Book(int id, String title, Author author, String isbn, String publicationDate, Genre genre) {
         this.id = id;
@@ -15,6 +16,7 @@ public class Book {
         this.isbn = isbn;
         this.publicationDate = publicationDate;
         this.genre = genre;
+        this.available = true; // set default value to true
     }
 
     public int getId() {
@@ -63,5 +65,25 @@ public class Book {
 
     public void setGenre(Genre genre) {
         this.genre = genre;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author=" + author +
+                ", isbn='" + isbn + '\'' +
+                ", publicationDate='" + publicationDate + '\'' +
+                ", genre=" + genre +
+                '}';
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
     }
 }
