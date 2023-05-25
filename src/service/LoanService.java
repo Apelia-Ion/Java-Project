@@ -40,9 +40,9 @@ public class LoanService {
                 loan.getDueDate().toString(), isOverdue(loan) ? "overdue" : "not overdue");
     }
 
-    public Loan makeLoan(Borrower borrower, Book book, LocalDate dueDate) {
+    public Loan makeLoan(Integer id, Borrower borrower, Book book, LocalDate dueDate) {
 
-        Loan loan = new Loan(borrower, book, dueDate, false);
+        Loan loan = new Loan(id, borrower, book, dueDate, false);
         if(book.getAvailable() == Boolean.TRUE)
         {
             loans.add(loan);

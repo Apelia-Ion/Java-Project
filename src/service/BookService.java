@@ -3,6 +3,7 @@ package service;
 
 import domain.Book;
 import exceptions.BookNotFoundException;
+import persistence.BookRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,33 @@ public class BookService {
         this.books = new ArrayList<>();
     }
 
+    private final BookRepository bookRepository = BookRepository.getInstance();
+
+
+
     public List<Book> getAllBooks() {
         return new ArrayList<>(books);
     }
+
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Added Database Functions Here ------------------------------------------------------
+    //
+
+    public List<Book> getAllBooksDB() {
+        return bookRepository.findAll();
+    }
+
+    public Book addNewBookToDB(Book book) {
+
+
+        return bookRepository.save(book);
+    }
+
+
+
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     public Book getBookById(int id) throws BookNotFoundException {
         for (Book book : books) {

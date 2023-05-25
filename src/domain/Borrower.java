@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Borrower {
+    private Integer id;
     private String name;
     private Address address;
     private String contactInfo;
     private List<Loan> loans;
 
-    public Borrower(String name, Address address, String contactInfo) {
+    public Borrower(Integer id,String name, Address address, String contactInfo) {
+        this.id =id;
         this.name = name;
         this.address = address;
         this.contactInfo = contactInfo;
@@ -46,5 +48,13 @@ public class Borrower {
 
     public void addLoan(Loan loan) {
         loans.add(loan);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

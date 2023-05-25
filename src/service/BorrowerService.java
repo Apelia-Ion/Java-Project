@@ -12,8 +12,8 @@ public class BorrowerService {
         this.borrowers = new ArrayList<>();
     }
 
-    public void addBorrower(String name, Address address, String contactInfo) {
-        Borrower borrower = new Borrower(name, address, contactInfo);
+    public void addBorrower(Integer id,String name, Address address, String contactInfo) {
+        Borrower borrower = new Borrower(id, name, address, contactInfo);
         borrowers.add(borrower);
     }
 

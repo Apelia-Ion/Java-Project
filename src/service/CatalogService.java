@@ -6,6 +6,7 @@ import domain.CD;
 import domain.Record;
 import exceptions.BookNotFoundException;
 import exceptions.RecordNotFoundException;
+import persistence.BookRepository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,21 @@ public class CatalogService {
         this.bookService = bookService;
         this.musicService = musicService;
     }
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Added Database Functions Here -----------------------------------------------------
+    //
+    public List<Book> getAllBooksFromDB() {
+
+        return bookService.getAllBooksDB();
+    }
+
+    public Book addNewBookToDB(Book book) {
+
+        return bookService.addNewBookToDB(book);
+    }
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     // Book methods
 
@@ -45,13 +61,19 @@ public class CatalogService {
 
     // returns all books from the catalog
     public List<Book> getAllBooks() {
+
         return bookService.getAllBooks();
+        //return bookService.getAllBooksDB();
     }
+
+
 
     // returns book by id
     public Book getBookById(int id) throws BookNotFoundException {
         return bookService.getBookById(id);
     }
+
+
 
     // Record methods
 
@@ -106,5 +128,7 @@ public class CatalogService {
     public CD getCDById(int id) throws RecordNotFoundException {
         return musicService.getCDById(id);
     }
+
+
 }
 

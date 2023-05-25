@@ -20,15 +20,15 @@ public class Main {
         CatalogService catalogService = new CatalogService(bookService, musicService);
 
         // Acum adaug niste date pt a putea realiza actiuni
-        Genre technicalGenre = new Genre("Technical", "Books that teach technical skills");
-        Genre fiction = new Genre("Fiction", "Fiction is the art of creating stories that are not entirely true, but may still be based on real events or real people.");
+        Genre technicalGenre = new Genre(1,"Technical", "Books that teach technical skills");
+        Genre fiction = new Genre(2,"Fiction", "Fiction is the art of creating stories that are not entirely true, but may still be based on real events or real people.");
 
-        Author author1 = new Author("John Doe", "14/07/1977", "Romanian", new Address("123 Main St", "Anytown", "y78y"));
-        Author author2 = new Author("Jane Austen", "02/04/1980", "English", new Address("456 Oak Ave", "Othertown", "9898"));
+        Author author1 = new Author(1,"John Doe", "14/07/1977", "Romanian", new Address(1,"123 Main St", "Anytown", "y78y"));
+        Author author2 = new Author(2,"Jane Austen", "02/04/1980", "English", new Address(2,"456 Oak Ave", "Othertown", "9898"));
 
         Book book1 = new Book(1,"Java 101", author1, "1234567890", "01/01/2022", technicalGenre);
         Book book2 = new Book(2,"Python for Beginners", author2, "0987654321", "01/01/2022", technicalGenre);
-        Book book3 = new Book(3,"The Catcher in the Rye", new Author("J.D. Salinger", null, "Finnish", null), "5555555555", "01/01/1951", fiction);
+        Book book3 = new Book(3,"The Catcher in the Rye", new Author(3,"J.D. Salinger", null, "Finnish", null), "5555555555", "01/01/1951", fiction);
 
 
         catalogService.addBook(book1);
@@ -73,12 +73,15 @@ public class Main {
             System.out.println("8. Issue Loan");
             System.out.println("9. Add Borrower");
             System.out.println("10. Return Loan");
+            System.out.println("11. Return All Books from DATABASE");
+            System.out.println("12. Add book to DATABASE");
 
             System.out.print("Enter option: ");
             int option = scanner.nextInt();
 
             switch (option) {
                 case 0:
+                    AuditService.writeAudit("Exited APP: ");
                     System.exit(0);
                     break;
                 case 1:
@@ -90,6 +93,9 @@ public class Main {
                     scanner.nextLine(); // Consume newline
                     String title = scanner.nextLine();
 
+                    System.out.print("Enter author id: ");
+                    Integer authorId = scanner.nextInt();
+
                     System.out.print("Enter author name: ");
                     String authorName = scanner.nextLine();
 
@@ -98,6 +104,8 @@ public class Main {
 
                     System.out.print("Enter author nationality: ");
                     String authorNationality = scanner.nextLine();
+                    System.out.print("Enter author AdressId: ");
+                    Integer authorAdressId = scanner.nextInt();
 
                     System.out.print("Enter author Street: ");
                     String authorStreet = scanner.nextLine();
@@ -114,18 +122,22 @@ public class Main {
                     System.out.print("Enter publication date (MM/DD/YYYY): ");
                     String publicationDate = scanner.nextLine();
 
+                    System.out.print("Enter genre id: ");
+                    Integer genreId = scanner.nextInt();
+
+
                     System.out.print("Enter genre name: ");
                     String genreName = scanner.nextLine();
 
                     System.out.print("Enter genre description: ");
                     String genreDescription = scanner.nextLine();
 
-                    Address authorAddress = new Address(authorStreet, authorCity, authorZip);
-                    Author author = new Author(authorName, authorDateOfBirth, authorNationality, authorAddress);
-                    Genre genre = new Genre(genreName, genreDescription);
+                    Address authorAddress = new Address(authorAdressId, authorStreet, authorCity, authorZip);
+                    Author author = new Author(authorId,authorName, authorDateOfBirth, authorNationality, authorAddress);
+                    Genre genre = new Genre(genreId,genreName, genreDescription);
                     Book book = new Book(bookId, title, author, isbn, publicationDate, genre);
                     catalogService.addBook(book);
-                    System.out.println("Book added successfully to catalog.");
+                    AuditService.writeAudit("Added Book to the list ");
                     break;
                 case 2:
                     System.out.print("Enter book ID: ");
@@ -136,34 +148,44 @@ public class Main {
                     } catch (BookNotFoundException e) {
                         System.out.println(e);
                     }
+                    AuditService.writeAudit("Removed book ");
 
                     break;
                 case 3:
                     System.out.print("Enter book ID: ");
                     bookId = scanner.nextInt();
                     bookService.printBook(bookId);
+                    AuditService.writeAudit("Book searched by id " );
                     break;
                 case 4:
                     System.out.print("Enter book Title: ");
                     String querry = scanner.next();
                     List<Book> result = catalogService.searchBooks(querry);
                     System.out.println(result);
+                    AuditService.writeAudit("ABook searched by title ");
                     break;
                 case 5:
                     result = catalogService.getAllBooks();
                     System.out.println(result);
+                    AuditService.writeAudit("Displayed all books in the list");
                     break;
                 case 6:
                     System.out.print("Enter CD id: ");
                     Integer cdId = scanner.nextInt();
                     musicService.printCD(cdId);
+                    AuditService.writeAudit("Searched CD by its id ");
                     break;
                 case 7:
                     System.out.print("Enter Record id: ");
                     Integer recordId = scanner.nextInt();
                     musicService.printRecord(recordId);
+                    AuditService.writeAudit("Searched Record by its id ");
                     break;
                 case 8:
+                    System.out.println("Enter loan id: ");
+                    Integer id = scanner.nextInt();
+                    System.out.println("Enter Borrower id: ");
+                    Integer bId = scanner.nextInt();
                     System.out.println("Enter Borrower Name: ");
                     Borrower borrower = null;
                     String bName = scanner.next();
@@ -193,10 +215,17 @@ public class Main {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
                     String formattedDate = duedate.format(formatter);
 
-                    loanService.makeLoan(borrower,book,duedate);
+                    loanService.makeLoan(id,borrower,book,duedate);
+                    AuditService.writeAudit("Issued Loan ");
                 case 9:
+                    System.out.println("Enter Borrower id: ");
+                     bId = scanner.nextInt();
+
                     System.out.println("Enter the new borrower's name:");
                     bName = scanner.next();
+
+                    System.out.print("Enter borrower AdressId: ");
+                    Integer bAdressId = scanner.nextInt();
 
                     System.out.print("Enter borrower Street: ");
                     String bStreet = scanner.nextLine();
@@ -210,9 +239,10 @@ public class Main {
                     System.out.print("Enter borrower contact info: ");
                     String bContact = scanner.nextLine();
 
-                    Address bAddress = new Address(bStreet, brCity, bZip);
+                    Address bAddress = new Address(bAdressId,bStreet, brCity, bZip);
 
-                    borrowerService.addBorrower(bName,bAddress,bContact);
+                    borrowerService.addBorrower(bId, bName,bAddress,bContact);
+                    AuditService.writeAudit("Added borrower");
                     break;
                 case 10:
                     System.out.println("Enter Borrower Name: ");
@@ -233,6 +263,70 @@ public class Main {
                             book.setAvailable(true);
                         }
                     }
+                    AuditService.writeAudit("Returned Loan");
+                    break;
+                case 11:
+                    result = catalogService.getAllBooksFromDB();
+                    System.out.println(result);
+                    AuditService.writeAudit("Returned all books from the database");
+                    break;
+                case 12:
+                    System.out.print("Enter (int) bookid: ");
+                    scanner.nextLine(); // Consume newline
+                     bookId = scanner.nextInt();
+
+                    System.out.print("Enter title: ");
+                    scanner.nextLine(); // Consume newline
+                     title = scanner.nextLine();
+
+                    System.out.print("Enter author id: ");
+                     authorId = scanner.nextInt();
+
+                    System.out.print("Enter author name: ");
+                     authorName = scanner.nextLine();
+
+                    System.out.print("Enter author Date of birth: ");
+                     authorDateOfBirth = scanner.nextLine();
+
+                    System.out.print("Enter author nationality: ");
+                     authorNationality = scanner.nextLine();
+                    System.out.print("Enter author AdressId: ");
+                     authorAdressId = scanner.nextInt();
+
+                    System.out.print("Enter author Street: ");
+                    authorStreet = scanner.nextLine();
+
+                    System.out.print("Enter author City: ");
+                     authorCity = scanner.nextLine();
+
+                    System.out.print("Enter author ZipCode: ");
+                     authorZip = scanner.nextLine();
+
+                    System.out.print("Enter ISBN: ");
+                     isbn = scanner.nextLine();
+
+                    System.out.print("Enter publication date (MM/DD/YYYY): ");
+                     publicationDate = scanner.nextLine();
+
+                    System.out.print("Enter genre id: ");
+                     genreId = scanner.nextInt();
+
+
+                    System.out.print("Enter genre name: ");
+                    genreName = scanner.nextLine();
+
+                    System.out.print("Enter genre description: ");
+                    genreDescription = scanner.nextLine();
+
+                     authorAddress = new Address(authorAdressId, authorStreet, authorCity, authorZip);
+                     author = new Author(authorId,authorName, authorDateOfBirth, authorNationality, authorAddress);
+                     genre = new Genre(genreId,genreName, genreDescription);
+                     book = new Book(bookId, title, author, isbn, publicationDate, genre);
+                    catalogService.addNewBookToDB(book);
+                    System.out.println("Book added successfully to catalog.");
+                    AuditService.writeAudit("SAdded a book to the database");
+                    break;
+
 
             }
 

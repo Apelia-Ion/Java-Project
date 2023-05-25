@@ -6,12 +6,14 @@ import java.time.LocalDate;
 
 
 public class Loan {
+    private Integer id;
     private Borrower borrower;
     private Book book;
     private LocalDate dueDate;
     private Boolean returned;
 
-    public Loan(Borrower borrower, Book book, LocalDate dueDate, Boolean returned) {
+    public Loan(Integer id, Borrower borrower, Book book, LocalDate dueDate, Boolean returned) {
+        this.id =id;
         this.borrower = borrower;
         this.book = book;
         this.dueDate = dueDate;
@@ -68,5 +70,21 @@ public class Loan {
 
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Boolean getReturned() {
+        return returned;
+    }
+
+    public void setReturned(Boolean returned) {
+        this.returned = returned;
     }
 }

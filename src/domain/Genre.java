@@ -1,10 +1,11 @@
 package domain;
 
 public class Genre {
+    private Integer id;
     private String name;
     private String description;
 
-    public Genre(String name, String description) {
+    public Genre(Integer id, String name, String description) {
         this.name = name;
         this.description = description;
     }
@@ -26,4 +27,11 @@ public class Genre {
     }
 
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

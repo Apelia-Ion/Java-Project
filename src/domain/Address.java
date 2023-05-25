@@ -1,11 +1,13 @@
 package domain;
 
 public class Address {
+    private int id;
     private String street;
     private String city;
     private String zipCode;
 
-    public Address(String street, String city, String zipCode) {
+    public Address(int id, String street, String city, String zipCode) {
+        this.id = id;
         this.street = street;
         this.city = city;
         this.zipCode = zipCode;
@@ -38,5 +40,13 @@ public class Address {
     @Override
     public String toString() {
         return street + ", " + city + ", " + zipCode;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

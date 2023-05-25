@@ -1,12 +1,14 @@
 package domain;
 
 public class Author {
+    private Integer id;
     private String name;
     private String dateOfBirth;
     private String nationality;
     private Address address;
 
-    public Author(String name, String dateOfBirth, String nationality, Address address) {
+    public Author(Integer id,String name, String dateOfBirth, String nationality, Address address) {
+        this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.nationality = nationality;
@@ -46,4 +48,11 @@ public class Author {
     }
 
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }
