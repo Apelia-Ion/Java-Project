@@ -8,10 +8,10 @@ public interface GenericRepository<T> {
     T save (T entity);
 
     List<T> findAll();
-//
-//    Optional<T> findById(String id);
+
+   Optional<T> findById(Integer id);
 //
 //    void update(T entity);
 //
-//    void delete(T entity);
+   void delete(T entity);
 }

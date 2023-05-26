@@ -1,0 +1,82 @@
+AM incercat sa realizaez cinexiunea cu baza de date in 2 moduri: cu H2, iar mai apoi cu MySql. Pentru a contsrui tabelele is a insera datele , am rulat query-ul urmator:
+
+CREATE TABLE address (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  street VARCHAR(255),
+  city VARCHAR(255),
+  zipCode VARCHAR(10)
+);
+
+CREATE TABLE author (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(255),
+  dateOfBirth DATE,
+  nationality VARCHAR(255),
+  addressId INT,
+  FOREIGN KEY (addressId) REFERENCES address(id)
+);
+
+CREATE TABLE book (
+  id INT PRIMARY KEY,
+  title VARCHAR(255),
+  author_id INT,
+  isbn VARCHAR(20),
+  publicationDate DATE,
+  available BOOLEAN,
+  FOREIGN KEY (author_id) REFERENCES author(id)
+);
+
+CREATE TABLE genre (
+  id INT PRIMARY KEY,
+  name VARCHAR(255),
+  description VARCHAR(255)
+);
+
+CREATE TABLE cd (
+  id INT PRIMARY KEY,
+  title VARCHAR(255),
+  artist_id INT,
+  `year` INT,
+  label VARCHAR(255),
+  FOREIGN KEY (artist_id) REFERENCES author(id)
+);
+
+CREATE TABLE record (
+  id INT PRIMARY KEY,
+  title VARCHAR(255),
+  artist_id INT,
+ `year` INT,
+  label VARCHAR(255),
+  FOREIGN KEY (artist_id) REFERENCES author(id)
+);
+
+CREATE TABLE borrower (
+  id INT PRIMARY KEY,
+  name VARCHAR(255),
+  address_street VARCHAR(255),
+  address_city VARCHAR(255),
+  address_zipCode VARCHAR(10),
+  contactInfo VARCHAR(255)
+);
+
+CREATE TABLE loan (
+  id INT PRIMARY KEY,
+  borrower_id INT,
+  book_id INT,
+  dueDate DATE,
+  returned BOOLEAN,
+  FOREIGN KEY (borrower_id) REFERENCES borrower(id),
+  FOREIGN KEY (book_id) REFERENCES book(id)
+);
+
+
+
+
+INSERT INTO genre (id, name, description)
+VALUES (1, 'Technical', 'Books that teach technical skills');
+INSERT INTO address (id, street, city, zipCode)
+VALUES (1, '123 Main St', 'Anytown', 'y78y');
+INSERT INTO author (id, name, dateOfBirth, nationality, address_id)
+VALUES (1, 'John Doe', '1977-07-14', 'Romanian', 1);
+INSERT INTO book (id, title, author_id, isbn, publicationDate, available)
+VALUES (1, 'Java 101', 1, '1234567890', '2022-01-01', 1);

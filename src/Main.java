@@ -1,8 +1,10 @@
 import domain.*;
 import exceptions.BookNotFoundException;
 import exceptions.BorrowerNotFoundException;
+import exceptions.GenreNotFoundException;
 import service.*;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDate;
@@ -73,8 +75,17 @@ public class Main {
             System.out.println("8. Issue Loan");
             System.out.println("9. Add Borrower");
             System.out.println("10. Return Loan");
+            System.out.println("-----------------------");
             System.out.println("11. Return All Books from DATABASE");
             System.out.println("12. Add book to DATABASE");
+            System.out.println("13. Search book by id in DATABASE");
+            System.out.println("14. Delete book by id in DATABASE");
+            System.out.println("15. Return all Genres from DATABASE");
+            System.out.println("16. Delete Genre from DATABASE");
+            System.out.println("17. Add Genre to DATABASE");
+            System.out.println("18. Add Address to DATABASE");
+            System.out.println("19: Return all adsresses from DATABASE");
+            System.out.println("20. return all CD's from DATABASE");
 
             System.out.print("Enter option: ");
             int option = scanner.nextInt();
@@ -324,8 +335,87 @@ public class Main {
                      book = new Book(bookId, title, author, isbn, publicationDate, genre);
                     catalogService.addNewBookToDB(book);
                     System.out.println("Book added successfully to catalog.");
-                    AuditService.writeAudit("SAdded a book to the database");
+                    AuditService.writeAudit("Added a book to the database");
                     break;
+                case 13:
+                    System.out.print("Enter book ID: ");
+                    bookId = scanner.nextInt();
+                    catalogService.findBookByIdDB(bookId);
+                    AuditService.writeAudit("Book searched by id in DATABASE " );
+                    break;
+                case 14:
+                    System.out.print("Enter book ID: ");
+                    bookId = scanner.nextInt();
+                    try {
+                        book = catalogService.getBookById(bookId);
+                        bookService.removeBookDB(book);
+                    } catch (BookNotFoundException e) {
+                        System.out.println(e);
+                    }
+                    AuditService.writeAudit("Removed book from DB");
+                case 15:
+
+                    List<Genre> result2 = catalogService.getAllGenresFromDB();
+                    System.out.println(result2);
+                    AuditService.writeAudit("Returned all genres from the database");
+                    break;
+                case 16:
+                    System.out.print("Enter Genre ID: ");
+                     genreId = scanner.nextInt();
+                    catalogService.deleteGenreFromDB(genreId);
+                    AuditService.writeAudit("Removed Genre from DB");
+                    break;
+                case 17:
+                    System.out.print("Enter genre id: ");
+                    genreId = scanner.nextInt();
+
+                    System.out.print("Enter genre name: ");
+                    genreName = scanner.nextLine();
+
+                    System.out.print("Enter genre description: ");
+                    genreDescription = scanner.nextLine();
+
+                    Genre newGenre = new Genre(genreId,genreName,genreDescription);
+                    catalogService.addNewGenreToDB(newGenre);
+                    AuditService.writeAudit("Added genre to the database");
+                    break;
+                case 18:
+                    System.out.print("Enter AdressId: ");
+                    Integer AdressId = scanner.nextInt();
+
+                    System.out.print("Enter  Street: ");
+                    String Street = scanner.nextLine();
+
+                    System.out.print("Enter  City: ");
+                    String City = scanner.nextLine();
+
+                    System.out.print("Enter ZipCode: ");
+                    String Zip = scanner.nextLine();
+
+                    Address newAddress = new Address(AdressId, Street, City, Zip);
+                    catalogService.addNewAddressToDB(newAddress);
+                    AuditService.writeAudit("Added address to the database");
+                    break;
+                case 19:
+                    List<Address> result3 = catalogService.getAllAddressesFromDB();
+                    System.out.println(result3);
+                    AuditService.writeAudit("Returned all addreses from the database");
+                    break;
+                case 20:
+                    List<CD> result4 = catalogService.getAllCDs();
+                    System.out.println(result4);
+                    AuditService.writeAudit("Returned all CDs from the database");
+                    break;
+
+
+
+
+
+
+
+
+
+
 
 
             }

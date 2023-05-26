@@ -7,6 +7,7 @@ import persistence.BookRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class BookService {
     private List<Book> books;
@@ -36,6 +37,16 @@ public class BookService {
 
 
         return bookRepository.save(book);
+    }
+
+    public Optional<Book> getBookByIdDB(Integer id)  {
+        Optional<Book> book = bookRepository.findById(id);
+        return book;
+    }
+
+    public void removeBookDB(Book book){
+        bookRepository.findById(book.getId());
+        bookRepository.delete(book);
     }
 
 

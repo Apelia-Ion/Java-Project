@@ -14,7 +14,7 @@ import static persistence.util.DbConnection.getDatabaseConnection;
 
 public class BookRepository implements GenericRepository<Book> {
 
-    private final Map<String, Book> storage = new HashMap<>();
+    private final Map<Integer, Book> storage = new HashMap<>();
     private static final String INSERT_BOOK_SQL = "INSERT INTO book (id, title, author, isbn, publicationDate, genre) VALUES (?, ?, ?, ?, ?, ?)";
 
 
@@ -39,13 +39,13 @@ public class BookRepository implements GenericRepository<Book> {
 
     @Override
     public Book save(Book entity) {
-        storage.put(String.valueOf(entity.getId()), entity);
+        storage.put(entity.getId(), entity);
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BOOK_SQL);
             preparedStatement.setInt(1, entity.getId());
             preparedStatement.setString(2, entity.getTitle());
-            preparedStatement.setString(3, entity.getAuthor().getName());
+            preparedStatement.setInt(3, entity.getAuthor().getId());
             preparedStatement.setString(4, entity.getIsbn());
             preparedStatement.setString(5, entity.getPublicationDate());
             preparedStatement.setString(6, entity.getGenre().getName());
@@ -61,6 +61,16 @@ public class BookRepository implements GenericRepository<Book> {
     public List<Book> findAll() {
         return new ArrayList<>(storage.values());
 
+    }
+
+    @Override
+    public Optional<Book> findById (Integer id) {
+        return Optional.ofNullable(storage.get(id));
+    }
+
+    @Override
+    public void delete(Book entity) {
+        storage.remove(entity.getId());
     }
 
 

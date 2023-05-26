@@ -1,21 +1,19 @@
 
 package service;
 
-import domain.Book;
-import domain.CD;
-import domain.Record;
+import domain.*;
 import exceptions.BookNotFoundException;
 import exceptions.RecordNotFoundException;
-import persistence.BookRepository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class CatalogService {
     private BookService bookService;
     private MusicService musicService;
+    private AddresService addresService;
+    private CDService cdService;
+    private GenreService genreService;
 
     public CatalogService(BookService bookService, MusicService musicService) {
         this.bookService = bookService;
@@ -24,7 +22,7 @@ public class CatalogService {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Added Database Functions Here -----------------------------------------------------
-    //
+    //-----------Books
     public List<Book> getAllBooksFromDB() {
 
         return bookService.getAllBooksDB();
@@ -34,6 +32,46 @@ public class CatalogService {
 
         return bookService.addNewBookToDB(book);
     }
+
+    public Optional<Book> findBookByIdDB (Integer id){
+        return bookService.getBookByIdDB(id);
+    }
+
+    //-----------Address
+    public Address addNewAddressToDB(Address address)
+    {
+        return addresService.addNewAddressToDB(address);
+    }
+
+    public List<Address> getAllAddressesFromDB()
+    {
+        return addresService.getAllAddressesDB();
+    }
+
+    //------------Genre
+    public Genre addNewGenreToDB (Genre genre)
+    {
+        return genreService.addNewGenreToDB(genre);
+    }
+
+    public List<Genre> getAllGenresFromDB()
+    {
+        return genreService.getAllGenresDB();
+    }
+
+    public Genre addNewGenreToDb(Genre genre)
+    {
+        return genreService.addNewGenreToDB(genre);
+    }
+
+    public void deleteGenreFromDB(Integer id) {
+        Optional<Genre> genreTBD = genreService.getGenreByIdDB(id);
+        genreTBD.ifPresent(genre -> genreService.removeGenreDB(genre));
+    }
+
+
+
+
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
