@@ -17,7 +17,7 @@ import static persistence.util.DbConnection.getDatabaseConnection;
 public class AddressRepository implements GenericRepository<Address>{
 
     private final Map<Integer, Address> storage = new HashMap<>();
-    private static final String INSERT_ADDRESS_SQL = "INSERT INTO address (id, streeet, city, zipcode) VALUES (?, ?, ?,?)";
+    private static final String INSERT_ADDRESS_SQL = "INSERT INTO address (id, street, city, zipcode) VALUES (?, ?, ?,?)";
 
 
     private final Connection connection;

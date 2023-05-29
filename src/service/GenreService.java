@@ -2,6 +2,8 @@ package service;
 
 import domain.Genre;
 import persistence.GenreRepository;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,8 +14,8 @@ public class GenreService {
 
     private final GenreRepository genreRepository = GenreRepository.getInstance();
 
-    public GenreService(List<Genre> genres) {
-        this.genres = genres;
+    public GenreService() {
+        this.genres = new ArrayList<>();
     }
 
     public List<Genre> getAllGenresDB() {

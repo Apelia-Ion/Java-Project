@@ -15,9 +15,12 @@ public class CatalogService {
     private CDService cdService;
     private GenreService genreService;
 
-    public CatalogService(BookService bookService, MusicService musicService) {
+    public CatalogService(BookService bookService, MusicService musicService, AddresService addresService, CDService cdService, GenreService genreService) {
         this.bookService = bookService;
         this.musicService = musicService;
+        this.addresService = addresService;
+        this.cdService = cdService;
+        this.genreService = genreService;
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

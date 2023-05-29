@@ -19,7 +19,11 @@ public class Main {
         LoanService loanService = new LoanService();
         BookService bookService = new BookService();
         MusicService musicService =new MusicService();
-        CatalogService catalogService = new CatalogService(bookService, musicService);
+        AddresService addresService = new AddresService();
+        CDService cdService = new CDService();
+        GenreService genreService =new GenreService();
+
+        CatalogService catalogService = new CatalogService(bookService, musicService, addresService, cdService, genreService);
 
         // Acum adaug niste date pt a putea realiza actiuni
         Genre technicalGenre = new Genre(1,"Technical", "Books that teach technical skills");
@@ -384,13 +388,13 @@ public class Main {
                     Integer AdressId = scanner.nextInt();
 
                     System.out.print("Enter  Street: ");
-                    String Street = scanner.nextLine();
+                    String Street = scanner.next();
 
                     System.out.print("Enter  City: ");
-                    String City = scanner.nextLine();
+                    String City = scanner.next();
 
                     System.out.print("Enter ZipCode: ");
-                    String Zip = scanner.nextLine();
+                    String Zip = scanner.next();
 
                     Address newAddress = new Address(AdressId, Street, City, Zip);
                     catalogService.addNewAddressToDB(newAddress);

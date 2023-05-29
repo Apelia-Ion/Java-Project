@@ -15,9 +15,11 @@ public class AddresService {
 
     private final AddressRepository addressRepository = AddressRepository.getInstance();
 
-    public AddresService(List<Address> addresses) {
-        this.addresses = addresses;
+    public AddresService() {
+        this.addresses = new ArrayList<>();
     }
+
+
 
     public Address addNewAddressToDB(Address address) {
         return addressRepository.save(address);
